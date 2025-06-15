@@ -1,0 +1,24 @@
+# Ignore Python bytecode and cache
+defaults
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore environment and system files
+.env
+.DS_Store
+
+# Ignore test cache
+.pytest_cache/
+
+# Ignore only the following project-specific folders/files:
+# (Do not ignore code or config files)
+
+# If you use a virtual environment, uncomment the next line:
+# venv/
+# .venv/
+
+# If you use IDEs, uncomment as needed:
+# .vscode/
+# .idea/
