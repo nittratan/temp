@@ -2,7 +2,8 @@ from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
 from app.exceptions.custom_exceptions import NextGenException, InvalidPayloadException, NotFoundException
 from app.config.error_codes import ErrorCode
-from app.models.request import TaskRequest
+from app.models.request import RequestPayload
+from app.models.response import ResponsePayload
 from app.services.llm_service import process_task
 from app.config.logger import logger
 
@@ -35,7 +36,7 @@ async def heartbeat():
 
 
 @router.post("/generate", tags=["LLM"])
-async def generate_5ws(request: TaskRequest):
+async def generate_5ws(request: RequestPayload):
     try:
         logger.info(f"Received task: {request.task_name}")
         response = await process_task(request)

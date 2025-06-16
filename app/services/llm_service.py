@@ -1,4 +1,5 @@
-from app.models.request import TaskRequest
+from app.models.request import RequestPayload
+from app.models.response import ResponsePayload
 
 def dummy_extract_5ws(content: str):
     return {
@@ -10,7 +11,7 @@ def dummy_extract_5ws(content: str):
         "supplemental_info": {"notes": "Follow-up in 2 weeks"}
     }
 
-async def process_task(request: TaskRequest):
+async def process_task(request: RequestPayload):
     content = request.document.content
     extracted = dummy_extract_5ws(content)
     return extracted

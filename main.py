@@ -37,5 +37,5 @@ async def global_exception_handler(request: Request, exc: Exception):
 app.include_router(nextgen_router, prefix="/api/nextgen")
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")
+    uvicorn.run(app, host="127.0.0.1", port=8000, log_level="info")
     logger.info("NextGen 5Ws API is running 🚀")
