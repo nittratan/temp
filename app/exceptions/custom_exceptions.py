@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from app.config.error_codes import ErrorCode
+from app.utils.error_codes import ErrorCode
 
 class NextGenException(HTTPException):
     def __init__(self, status_code: int = ErrorCode.SERVER_ERROR, detail: str = "An error occurred", headers: dict = None):

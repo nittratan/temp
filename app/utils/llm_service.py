@@ -1,5 +1,4 @@
-from app.models.request import RequestPayload
-from app.models.response import ResponsePayload
+from app.schemas.request import RequestPayload
 
 def dummy_extract_5ws(content: str):
     return {

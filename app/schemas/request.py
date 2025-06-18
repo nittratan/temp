@@ -1,8 +1,12 @@
 from typing import Optional, List, Dict, Annotated
-from enum import Enum
+from enum import StrEnum, auto
 from pydantic import BaseModel, Field, field_validator
 
-class TaskName(str, Enum):
+class AutoStrEnum(StrEnum):
+    def _generate_next_value_(name, start, count, last_values):
+        return name.lower()
+
+class TaskName(AutoStrEnum):
     """
     Enum for supported task names.
     extractive_summarization: Extracts key sentences from the document.
@@ -10,12 +14,12 @@ class TaskName(str, Enum):
     classification: Classifies the document.
     five_ws_extraction: Extracts Who, What, When, Where, Why.
     """
-    extractive_summarization = "extractive_summarization"
-    abstractive_summarization = "abstractive_summarization"
-    classification = "classification"
-    five_ws_extraction = "five_ws_extraction"
+    EXTRACTIVE_SUMMARIZATION = auto()
+    ABSTRACTIVE_SUMMARIZATION = auto()
+    CLASSIFICATION = auto()
+    FIVE_WS_EXTRACTION = auto()
 
-class RequestorType(str, Enum):
+class RequestorType(AutoStrEnum):
     """
     Enum for the type of requestor.
     member: End user or patient.
@@ -23,12 +27,12 @@ class RequestorType(str, Enum):
     admin: Administrator.
     system: Automated system.
     """
-    member = "member"
-    provider = "provider"
-    admin = "admin"
-    system = "system"
+    MEMBER = auto()
+    PROVIDER = auto()
+    ADMIN = auto()
+    SYSTEM = auto()
 
-class ReadingLevel(str, Enum):
+class ReadingLevel(AutoStrEnum):
     """
     Enum for reading level of the response content.
     elementary: Elementary school level.
@@ -37,13 +41,13 @@ class ReadingLevel(str, Enum):
     college: College level.
     professional: Professional/technical level.
     """
-    elementary = "elementary"
-    middle_school = "middle_school"
-    high_school = "high_school"
-    college = "college"
-    professional = "professional"
+    ELEMENTARY = auto()
+    MIDDLE_SCHOOL = auto()
+    HIGH_SCHOOL = auto()
+    COLLEGE = auto()
+    PROFESSIONAL = auto()
 
-class DocumentType(str, Enum):
+class DocumentType(AutoStrEnum):
     """
     Enum for document types.
     transcription: Transcribed text.
@@ -51,10 +55,10 @@ class DocumentType(str, Enum):
     report: Report document.
     note: Note or memo.
     """
-    transcription = "transcription"
-    document = "document"
-    report = "report"
-    note = "note"
+    TRANSCRIPTION = auto()
+    DOCUMENT = auto()
+    REPORT = auto()
+    NOTE = auto()
 
 class Extraction5WsContainer(BaseModel):
     """

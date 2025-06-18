@@ -1,20 +1,22 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
 from app.exceptions.custom_exceptions import NextGenException, InvalidPayloadException, NotFoundException
-from app.config.error_codes import ErrorCode
-from app.models.request import RequestPayload
-from app.models.response import ResponsePayload
-from app.services.llm_service import process_task
-from app.config.logger import logger
+from app.utils.error_codes import ErrorCode
+from app.schemas.request import RequestPayload
+from app.schemas.response import ResponsePayload
+from app.utils.llm_service import process_task
+import logging
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    level=logging.INFO
+)
 
 router = APIRouter()
 
-@router.get("/", tags=["Index"])
-def index():
-    logger.info("NextGen API is live!")
-    return {"message": "NextGen API is live!"}
 
-@router.get("/capabilities", tags=["Core"])
+@router.get("/capabilities")
 async def get_capabilities():
     try:
         models = ["03-mini-openai", "gpt-4", "llama-3"]
@@ -25,17 +27,7 @@ async def get_capabilities():
         raise NextGenException(detail=f"Error in /capabilities: {str(e)}")
 
 
-@router.post("/heartbeat", tags=["Core"])
-async def heartbeat():
-    try:
-        logger.info("Heartbeat check")
-        return JSONResponse(status_code=ErrorCode.SUCCESS, content={"info": "heartbeat OK", "role": "backend"})
-    except Exception as e:
-        logger.error(f"Error in /heartbeat: {str(e)}")
-        raise NextGenException(detail=f"Error in /heartbeat: {str(e)}")
-
-
-@router.post("/generate", tags=["LLM"])
+@router.post("/generate")
 async def generate_5ws(request: RequestPayload):
     try:
         logger.info(f"Received task: {request.task_name}")

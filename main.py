@@ -4,7 +4,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from dotenv import load_dotenv
 from app.api_router.nextgen_router import router as nextgen_router
-from app.config.logger import setup_logger
 import logging
 import uvicorn
 import traceback
@@ -12,7 +11,8 @@ import traceback
 load_dotenv()
 
 app = FastAPI(title="NextGen 5Ws API")
-logger = setup_logger()
+logger = logging.getLogger(__name__)
+logging.basicConfig(format='%(asctime)s [%(levelname)s] %(message)s', level=logging.INFO)
 
 # CORS Setup (use env variable for origins)
 ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "*").split(",")
@@ -32,6 +32,20 @@ async def global_exception_handler(request: Request, exc: Exception):
         status_code=500,
         content={"detail": "Internal server error"}
     )
+
+@app.get("/")
+def index():
+    logger.info("NextGen API is live!")
+    return {"message": "NextGen API is live!"}
+
+@app.post("/heartbeat")
+async def heartbeat():
+    try:
+        logger.info("Heartbeat check")
+        return JSONResponse(status_code=200, content={"info": "heartbeat OK", "role": "backend"})
+    except Exception as e:
+        logger.error(f"Error in /heartbeat: {str(e)}")
+        return JSONResponse(status_code=500, content={"detail": f"Error in /heartbeat: {str(e)}"})
 
 # Include router
 app.include_router(nextgen_router, prefix="/api/nextgen")
