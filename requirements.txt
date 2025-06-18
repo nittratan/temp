@@ -8,3 +8,9 @@ pydantic
 # For test
 pytest
 httpx
+
+
+
+I initially named the folder as fastapi since we are using the FastAPI library itself, but I faced conflicts while importing fastapi in other files. After going through the FastAPI documentation and identifying the root cause, I renamed the folder to fastapi_integration to avoid those import issues.
+
+Also, it would be really helpful if we could finalize a basic folder structure for FastAPI. Since all of us are contributing through different branches, having a common structure in place will make it easier to add new sprint stories and keep the codebase organized.
