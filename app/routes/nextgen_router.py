@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
-from app.exceptions.custom_exceptions import NextGenException, InvalidPayloadException, NotFoundException
+from app.exceptions.exceptions import NextGenException, InvalidPayloadException, NotFoundException
 from app.utils.error_codes import ErrorCode
 from app.schemas.request import RequestPayload
 from app.schemas.response import ResponsePayload

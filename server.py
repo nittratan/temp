@@ -3,7 +3,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from dotenv import load_dotenv
-from app.api_router.nextgen_router import router as nextgen_router
+from app.routes import nextgen_router
 import logging
 import uvicorn
 import traceback
@@ -48,7 +48,7 @@ async def heartbeat():
         return JSONResponse(status_code=500, content={"detail": f"Error in /heartbeat: {str(e)}"})
 
 # Include router
-app.include_router(nextgen_router, prefix="/api/nextgen")
+app.include_router(nextgen_router.router)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000, log_level="info")
